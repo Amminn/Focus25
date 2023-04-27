@@ -1,1 +1,100 @@
-/* No CSS *//*# sourceMappingURL=index.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  color: #343a40;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 50vh;
+}
+
+.extension-container {
+  background-color: white;
+  border: 1px solid #343434;
+  width: 320px;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.extension-container .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 2rem;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.extension-container .header .logo {
+  font-size: 1.6rem;
+}
+
+.extension-container .header .icon {
+  width: 20px;
+}
+
+.extension-container .main {
+  margin-bottom: 2.5rem;
+}
+
+.extension-container .main .input-container {
+  font-size: 1.8rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.extension-container .main .input-container .input {
+  width: 2ch;
+  font-size: 1.8rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+}
+
+.extension-container .main .input-container .input[type="number"]::-webkit-outer-spin-button,
+.extension-container .main .input-container .input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.extension-container .main .input-container .input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.extension-container .main input {
+  max-width: 80px;
+}
+
+.extension-container .button-btn.single {
+  padding: 0.8rem 2.8rem;
+  font-size: 1.8rem;
+  background-color: transparent;
+  border: 1px solid #343434;
+  border-radius: 5px;
+  display: block;
+  margin-inline: auto;
+}
+/*# sourceMappingURL=index.css.map */
