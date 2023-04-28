@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+$warning: #e67700;
 
 * {
   padding: 0;
@@ -53,10 +54,10 @@ body {
       .input {
         width: 2ch;
         font-size: 1.8rem;
+        color: inherit;
         background-color: transparent;
         border: none;
         outline: none;
-        color: inherit;
       }
       .input[type="number"]::-webkit-outer-spin-button,
       .input[type="number"]::-webkit-inner-spin-button {
@@ -68,6 +69,15 @@ body {
       }
     }
 
+    .work {
+      min-height: 5.4rem;
+      text-align: center;
+      p {
+        font-size: 1.8rem;
+        color: inherit;
+      }
+    }
+
     input {
       max-width: 80px;
     }
@@ -75,12 +85,38 @@ body {
 
   .button-btn.single {
     padding: 0.8rem 2.8rem;
-    font-size: 1.8rem;
     background-color: transparent;
+    font-size: 1.8rem;
     border: 1px solid #343434;
     border-radius: 5px;
     display: block;
     margin-inline: auto;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+
+    button {
+      font-size: 1.8rem;
+      padding: 0.8rem 2.8rem;
+      background-color: transparent;
+      border: 1px solid #343434;
+      border-radius: 5px;
+      text-transform: capitalize;
+      cursor: pointer;
+
+      &.warning {
+        color: $warning;
+        border-color: $warning;
+      }
+    }
+
   }
 }
 
