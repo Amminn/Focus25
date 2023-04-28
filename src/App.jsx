@@ -3,16 +3,14 @@ import FocusTime from "./FocusTime";
 import TimeConfiguration from "./TimeConfiguration";
 import BreakTime from "./BreakTime";
 import noteIcon from "./assets/bx-notepad.svg";
+import notificationSound from './assets/mixkit-happy-bell-alert-601.wav'
 
 function App() {
-  const [focusTime, setFocusTime] = React.useState({ minutes: '25', seconds: '00' });
+  const [focusTime, setFocusTime] = React.useState({ minutes: '00', seconds: '07' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
   const [focusTimeIsRunning, setFocusTimeIsRunning] = React.useState(false);
   const [shouldPause, setShouldPause] = React.useState(false)
   const [isBreakTurn, setIsBreakTurn] = React.useState(false)
-
-  console.log(shouldPause)
-  console.log(breakTime)
 
   function handleFocusTimeChange(e) {
     const { name, value } = e.target;
@@ -56,9 +54,16 @@ function App() {
 
   React.useEffect(() => {
     const countdown = () => {
+      console.log('i did run')
       let currentTimer = isBreakTurn ? breakTime : focusTime;
       if (focusTime.minutes == '00' && focusTime.seconds === '00') {
         setIsBreakTurn(true)
+        setShouldPause(true)
+        //setFocusTimeIsRunning(false); // Stop the countdown
+        clearInterval(intervalIdRef.current);
+        var audio = new Audio(notificationSound);
+        // audio.loop = false
+        audio.play();
       }
       if (currentTimer.minutes === '00' && currentTimer.seconds === '00') {
         clearInterval(intervalIdRef.current);
@@ -89,7 +94,10 @@ function App() {
     }
 
     return () => clearInterval(intervalIdRef.current);
-  }, [focusTime, focusTimeIsRunning, shouldPause, isBreakTurn, breakTime]);  
+  }, [focusTime, focusTimeIsRunning, shouldPause, isBreakTurn, breakTime]);
+
+  ////////////////////////////////////////
+
   // React.useEffect(() => {
   //   let intervalId = null;
 
