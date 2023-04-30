@@ -12,19 +12,6 @@ html {
   color: #343a40;
 }
 
-body {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  min-height: 50vh;
-}
-
 .extension-container {
   background-color: white;
   border: 1px solid #343434;

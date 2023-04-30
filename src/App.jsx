@@ -106,10 +106,6 @@ function App() {
     return () => clearInterval(intervalId);
   }, [isActive, mode]);
 
-
-  console.log(focusTime)
-  console.log(breakTime)
-
   return (
     <div className="extension-container">
       <div className="header">
