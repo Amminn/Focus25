@@ -1,6 +1,12 @@
 import React from 'react'
 
 function TimeConfiguration({focusTime, breakTime, handleFocusTimeChange, handleBreakTimeChange}) {
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <>
       <div className="input-container">
@@ -13,6 +19,7 @@ function TimeConfiguration({focusTime, breakTime, handleFocusTimeChange, handleB
           value={focusTime.minutes}
           onChange={handleFocusTimeChange}
           maxLength={2}
+          ref={inputRef}
         />
         <span>:</span>
         <input

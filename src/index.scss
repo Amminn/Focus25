@@ -86,7 +86,7 @@ body {
   .button-btn.single {
     padding: 0.8rem 2.8rem;
     background-color: transparent;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     border: 1px solid #343434;
     border-radius: 5px;
     display: block;
@@ -95,6 +95,7 @@ body {
 
   button {
     cursor: pointer;
+    font-size: 1.6rem;
   }
 
   .buttons-wrapper {
@@ -103,7 +104,6 @@ body {
     gap: 1.5rem;
 
     button {
-      font-size: 1.8rem;
       padding: 0.8rem 2.8rem;
       background-color: transparent;
       border: 1px solid #343434;
@@ -117,6 +117,24 @@ body {
       }
     }
 
+  }
+}
+
+.notepad-area {
+  .textarea {
+    width: 100%;
+    background-color: #fff0df5e;
+    // background-color: black;
+    font-size: 1.5rem;
+    display: block;
+    margin-inline: auto;
+    min-height: 210px;
+    max-height: 210px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 2rem;
+    outline: none;
+    border: 1px solid gray;
   }
 }
 

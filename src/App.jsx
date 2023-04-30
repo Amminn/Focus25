@@ -3,14 +3,29 @@ import FocusTime from "./FocusTime";
 import TimeConfiguration from "./TimeConfiguration";
 import BreakTime from "./BreakTime";
 import noteIcon from "./assets/bx-notepad.svg";
-import notificationSound from './assets/mixkit-happy-bell-alert-601.wav'
+import Note from './Note'
+// import notificationSound from './assets/mixkit-happy-bell-alert-601.wav'
+import newNotification from './assets/audiomass-output-edited.wav'
 
 function App() {
-  const [focusTime, setFocusTime] = React.useState({ minutes: '00', seconds: '07' });
+  const [focusTime, setFocusTime] = React.useState({ minutes: '25', seconds: '00' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
-  const [focusTimeIsRunning, setFocusTimeIsRunning] = React.useState(false);
-  const [shouldPause, setShouldPause] = React.useState(false)
-  const [isBreakTurn, setIsBreakTurn] = React.useState(false)
+  const [userTime, setUserTime] = React.useState({
+    focus: { minutes: 25, seconds: 0 },
+    break: { minutes: 5, seconds: 0 },
+  });
+  const [mode, setMode] = React.useState('configuration');
+  const [isActive, setIsActive] = React.useState(false);
+  const [notePadToggle, setNotePadToggle] = React.useState(false)
+  // after 4 session increase the break time a little bit once
+
+  // configuration / focusTime / breakTime / PauseRun / mode
+  function rememberUserTime () {
+    setUserTime(prev => ({
+      focus: {minutes: focusTime.minutes, seconds: focusTime.seconds},
+      break: {minutes: breakTime.minutes, seconds: breakTime.seconds}
+    }))
+  }
 
   function handleFocusTimeChange(e) {
     const { name, value } = e.target;
@@ -50,125 +65,55 @@ function App() {
     });
   }
 
-  const intervalIdRef = React.useRef(null);
+  const audio = new Audio(newNotification)
 
   React.useEffect(() => {
-    const countdown = () => {
-      console.log('i did run')
-      let currentTimer = isBreakTurn ? breakTime : focusTime;
-      if (focusTime.minutes == '00' && focusTime.seconds === '00') {
-        setIsBreakTurn(true)
-        setShouldPause(true)
-        //setFocusTimeIsRunning(false); // Stop the countdown
-        clearInterval(intervalIdRef.current);
-        var audio = new Audio(notificationSound);
-        // audio.loop = false
-        audio.play();
-      }
-      if (currentTimer.minutes === '00' && currentTimer.seconds === '00') {
-        clearInterval(intervalIdRef.current);
-      } else {
-        let seconds = parseInt(currentTimer.seconds);
-        let minutes = parseInt(currentTimer.minutes);
-
-        if (!shouldPause) {
-          if (seconds === 0) {
-            minutes--;
-            seconds = 59;
-          } else {
-            seconds--;
+    let intervalId;
+    if (isActive && mode === 'focus') {
+      intervalId = setInterval(() => {
+        setFocusTime(prevTime => {
+          const seconds = prevTime.seconds === '00' ? '59' : String(Number(prevTime.seconds) - 1).padStart(2, '0');
+          const minutes = seconds === '59' ? String(Number(prevTime.minutes) - 1).padStart(2, '0') : prevTime.minutes;
+          if (minutes === '00' && seconds === '00') {
+            audio.play()
+            setNotePadToggle(true)
+            setMode('break');
+            setIsActive(false)
+            clearInterval(intervalId);
           }
-
-          const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-          const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-          isBreakTurn ? setBreakTime({ minutes: formattedMinutes, seconds: formattedSeconds })
-                      : setFocusTime({ minutes: formattedMinutes, seconds: formattedSeconds });
-        }
-      }
-    };
-
-    if (focusTimeIsRunning) {
-      intervalIdRef.current = setInterval(countdown, 1000);
-    } else {
-      clearInterval(intervalIdRef.current);
+          return { minutes, seconds };
+        });
+      }, 1000);
+    } else if (isActive && mode === 'break') {
+      intervalId = setInterval(() => {
+        setBreakTime(prevTime => {
+          const seconds = prevTime.seconds === '00' ? '59' : String(Number(prevTime.seconds) - 1).padStart(2, '0');
+          const minutes = seconds === '59' ? String(Number(prevTime.minutes) - 1).padStart(2, '0') : prevTime.minutes;
+          if (minutes === '00' && seconds === '00') {
+            setFocusTime({minutes: userTime.focus.minutes, seconds: userTime.focus.seconds})
+            setBreakTime({minutes: userTime.break.minutes, seconds: userTime.break.seconds})
+            setNotePadToggle(false)
+            audio.play()
+            setMode('focus');
+            setIsActive(false)
+            clearInterval(intervalId);
+          }
+          return { minutes, seconds };
+        });
+      }, 1000);
     }
 
-    return () => clearInterval(intervalIdRef.current);
-  }, [focusTime, focusTimeIsRunning, shouldPause, isBreakTurn, breakTime]);
-
-  ////////////////////////////////////////
-
-  // React.useEffect(() => {
-  //   let intervalId = null;
-
-  //   const countdown = () => {
-  //     let currentBreak
-  //     isBreakTurn ? currentBreak = breakTime : currentBreak = focusTime
-  //     if (focusTime.minutes === '00' && focusTime.seconds === '00') {
-  //       clearInterval(intervalId);
-  //     } else {
-  //       let seconds = parseInt(focusTime.seconds);
-  //       let minutes = parseInt(focusTime.minutes);
-
-  //       if (!shouldPause) { // only update the time if shouldPause is false
-  //         if (seconds === 0) {
-  //           minutes--;
-  //           seconds = 59;
-  //         } else {
-  //           seconds--;
-  //         }
-
-  //         const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-  //         const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-
-  //         setFocusTime({ minutes: formattedMinutes, seconds: formattedSeconds });
-  //       }
-  //     }
-  //   };
-
-  //   if (focusTimeIsRunning) {
-  //     intervalId = setInterval(countdown, 1000);
-  //   }
-
-  //   return () => clearInterval(intervalId);
-  // }, [focusTime, focusTimeIsRunning, shouldPause]);
+    return () => clearInterval(intervalId);
+  }, [isActive, mode]);
 
 
-  // React.useEffect(() => {
-  //   let intervalId = null;
+  console.log(focusTime)
+  console.log(breakTime)
 
-  //   if (focusTimeIsRunning) {
-  //     const countdown = () => {
-  //       if (focusTime.minutes === '00' && focusTime.seconds === '00') {
-  //         clearInterval(intervalId);
-  //       } else {
-  //         let seconds = parseInt(focusTime.seconds);
-  //         let minutes = parseInt(focusTime.minutes);
-
-  //         if (seconds === 0) {
-  //           minutes--;
-  //           seconds = 59;
-  //         } else {
-  //           seconds--;
-  //         }
-
-  //         const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-  //         const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-
-  //         setFocusTime({ minutes: formattedMinutes, seconds: formattedSeconds });
-  //       }
-  //     };
-
-  //     intervalId = setInterval(countdown, 1000);
-
-  //     return () => clearInterval(intervalId);
-  //   }
-  // }, [focusTime, focusTimeIsRunning]);
-//
   return (
     <div className="extension-container">
       <div className="header">
-        <a href="" className="note-toggle" title="Toggle NotePad">
+        <a onClick={() => (setNotePadToggle(prev => !prev))} className="note-toggle" title="Toggle NotePad">
         <img
           src={noteIcon}
           className="icon"
@@ -178,54 +123,67 @@ function App() {
       </div>
 
       <div className="main">
-        {
-          !focusTimeIsRunning ?
-          <TimeConfiguration
-            focusTime={focusTime}
-            breakTime={breakTime}
-            handleBreakTimeChange={handleBreakTimeChange}
-            handleFocusTimeChange={handleFocusTimeChange}
-          />
-          :
-          !isBreakTurn ?
+        {mode === 'configuration' && (
+            <TimeConfiguration
+              focusTime={focusTime}
+              breakTime={breakTime}
+              handleBreakTimeChange={handleBreakTimeChange}
+              handleFocusTimeChange={handleFocusTimeChange}
+            />
+          )
+        }
+        {mode === 'focus' && (
           <FocusTime
             focusTime={focusTime}
           />
-          :
+        )}
+        {mode === 'break' && (
           <BreakTime
             breakTime={breakTime}
           />
-        }
+        )}
       </div>
 
-      {
-        focusTimeIsRunning ?
-        <div className="buttons-wrapper">
-          <button
-            // onClick={() => {setFocusTimeIsRunning(false), setShouldPause(true)}}
-            onClick={() => {setShouldPause(prev => !prev)}}
-          >
-            {shouldPause ? 'Continue' : 'Pause'}
-          </button>
-          <button
-            className="warning"
-            onClick={() => {
-              setFocusTimeIsRunning(false),
-              setFocusTime({ minutes: '25', seconds: '00' }),
-              setBreakTime({ minutes: '05', seconds: '00'})
-            }}
-          >
-            reset
-          </button>
-        </div>
-        :
+      {notePadToggle && (
+        <Note />
+      )}
+
+      <div className="buttons-wrapper">
+        {(mode === 'focus' || mode === 'break') && (
+          <>
+            <button
+              onClick={() => (setIsActive(prev => !prev))}
+            >
+              {isActive ? 'Pause' : 'Continue'}
+            </button>
+            <button
+              className="warning"
+              onClick={() => {
+                setFocusTime({ minutes: '00', seconds: '15' }),
+                setBreakTime({ minutes: '00', seconds: '10' }),
+                setIsActive(false)
+                setMode('configuration')
+              }}
+              >
+              Reset
+            </button>
+          </>
+        )}
+      </div>
+      {mode === 'configuration' && (
         <button
-          onClick={() => {setFocusTimeIsRunning(true)}}
+          onClick={() => {
+            (
+              setIsActive(true),
+              setMode('focus'),
+              rememberUserTime()
+            )
+          }}
           className="button-btn single"
         >
           Start
         </button>
-      }
+      )}
     </div>
   )
 }
