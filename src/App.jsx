@@ -11,8 +11,8 @@ function App() {
   const [focusTime, setFocusTime] = React.useState({ minutes: '25', seconds: '00' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
   const [userTime, setUserTime] = React.useState({
-    focus: { minutes: 25, seconds: 0 },
-    break: { minutes: 5, seconds: 0 },
+    focus: { minutes: '25', seconds: '00' },
+    break: { minutes: '05', seconds: '00' },
   });
   const [mode, setMode] = React.useState('configuration');
   const [isActive, setIsActive] = React.useState(false);
@@ -159,8 +159,8 @@ function App() {
             <button
               className="warning"
               onClick={() => {
-                setFocusTime({ minutes: '00', seconds: '15' }),
-                setBreakTime({ minutes: '00', seconds: '10' }),
+                setFocusTime({ minutes: '25', seconds: '00' }),
+                setBreakTime({ minutes: '05', seconds: '00' }),
                 setIsActive(false)
                 setMode('configuration')
               }}

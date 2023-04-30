@@ -150,5 +150,6 @@ body {
   margin-bottom: 2rem;
   outline: none;
   border: 1px solid gray;
+  resize: none;
 }
 /*# sourceMappingURL=index.css.map */

@@ -2,12 +2,19 @@ import React from 'react'
 
 function Note() {
   const [noteContent, setNoteContent] = React.useState('Start here')
-  console.log(noteContent)
 
   function noteChangeHandler(e) {
     let value = e.target.value
     setNoteContent(value)
+    localStorage.setItem('noteContent', value);
   }
+
+  React.useEffect(() => {
+    const savedNoteContent = localStorage.getItem('noteContent');
+    if (savedNoteContent) {
+      setNoteContent(savedNoteContent); // Set note content from local storage on initial render
+    }
+  }, [])
 
   return (
     <div className='notepad-area'>
