@@ -2,15 +2,21 @@
   "short_name": "Focus25",
   "name": "Focus25",
   "icons": {
-    "16": "favicon.ico",
-    "48": "logo192.png",
-   "128": "logo512.png"
+    "16": "vite.svg",
+    "48": "outline-delete-forever.svg",
+   "128": "outline-delete-forever.svg"
   },
-  "permissions": ["storage"],
+  "permissions": [
+    "alarms",
+    "activeTab"
+  ],
   "manifest_version": 2,
   "version": "0.0.1",
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "Focus25 Stay Focus"
+  },
+  "background": {
+    "scripts": ["background.js"]
   }
 }

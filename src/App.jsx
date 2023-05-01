@@ -8,6 +8,7 @@ import Note from './Note'
 import newNotification from './assets/audiomass-output-edited.wav'
 
 function App() {
+  console.log('hello from the otherside')
   const [focusTime, setFocusTime] = React.useState({ minutes: '25', seconds: '00' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
   const [userTime, setUserTime] = React.useState({
@@ -107,7 +108,7 @@ function App() {
   }, [isActive, mode]);
 
   return (
-    <div className="extension-container">
+    <div className="App">
       <div className="header">
         <a onClick={() => (setNotePadToggle(prev => !prev))} className="note-toggle" title="Toggle NotePad">
           <img

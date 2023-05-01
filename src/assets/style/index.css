@@ -32,15 +32,14 @@ html {
   background: #555;
 }
 
-.extension-container {
+.App {
   background-color: white;
-  border: 1px solid #343434;
   width: 320px;
-  border-radius: 10px;
   padding: 2rem;
+  text-align: center;
 }
 
-.extension-container .header {
+.App .header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -54,26 +53,26 @@ html {
   margin-bottom: 1.5rem;
 }
 
-.extension-container .header .logo {
+.App .header .logo {
   font-size: 1.6rem;
 }
 
-.extension-container .header .icon {
+.App .header .icon {
   width: 20px;
   fill: #343434;
 }
 
-.extension-container .main {
+.App .main {
   margin-bottom: 2.5rem;
 }
 
-.extension-container .main .input-container {
+.App .main .input-container {
   font-size: 1.8rem;
   margin-inline: auto;
   text-align: center;
 }
 
-.extension-container .main .input-container .input {
+.App .main .input-container .input {
   width: 2ch;
   font-size: 1.8rem;
   color: inherit;
@@ -82,31 +81,31 @@ html {
   outline: none;
 }
 
-.extension-container .main .input-container .input[type="number"]::-webkit-outer-spin-button,
-.extension-container .main .input-container .input[type="number"]::-webkit-inner-spin-button {
+.App .main .input-container .input[type="number"]::-webkit-outer-spin-button,
+.App .main .input-container .input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.extension-container .main .input-container .input[type="number"] {
+.App .main .input-container .input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.extension-container .main .work {
+.App .main .work {
   min-height: 5.4rem;
   text-align: center;
 }
 
-.extension-container .main .work p {
+.App .main .work p {
   font-size: 1.8rem;
   color: inherit;
 }
 
-.extension-container .main input {
+.App .main input {
   max-width: 80px;
 }
 
-.extension-container .button-btn.single {
+.App .button-btn.single {
   padding: 0.8rem 2.8rem;
   background-color: transparent;
   font-size: 1.6rem;
@@ -116,12 +115,12 @@ html {
   margin-inline: auto;
 }
 
-.extension-container button {
+.App button {
   cursor: pointer;
   font-size: 1.6rem;
 }
 
-.extension-container .buttons-wrapper {
+.App .buttons-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -131,7 +130,7 @@ html {
   gap: 1.5rem;
 }
 
-.extension-container .buttons-wrapper button {
+.App .buttons-wrapper button {
   padding: 0.8rem 2.8rem;
   background-color: transparent;
   border: 1px solid #343434;
@@ -140,7 +139,7 @@ html {
   cursor: pointer;
 }
 
-.extension-container .buttons-wrapper button.warning {
+.App .buttons-wrapper button.warning {
   color: #e67700;
   border-color: #e67700;
 }
