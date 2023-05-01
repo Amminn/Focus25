@@ -12,6 +12,26 @@ html {
   color: #343a40;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bec4c4;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .extension-container {
   background-color: white;
   border: 1px solid #343434;
@@ -40,6 +60,7 @@ html {
 
 .extension-container .header .icon {
   width: 20px;
+  fill: #343434;
 }
 
 .extension-container .main {
@@ -124,19 +145,37 @@ html {
   border-color: #e67700;
 }
 
+.notepad-area .textarea-wrapper {
+  position: relative;
+  border: 1px solid #e67700;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.notepad-area .textarea-wrapper .delete {
+  position: absolute;
+  top: 3%;
+  right: 4%;
+  cursor: pointer;
+}
+
+.notepad-area .textarea-wrapper .delete img {
+  width: 21px;
+}
+
 .notepad-area .textarea {
   width: 100%;
+  border: none;
   background-color: #fff0df5e;
   font-size: 1.5rem;
   display: block;
   margin-inline: auto;
   min-height: 210px;
   max-height: 210px;
-  border-radius: 10px;
   padding: 10px;
-  margin-bottom: 2rem;
+  padding-top: 2.5rem;
   outline: none;
-  border: 1px solid gray;
   resize: none;
 }
 /*# sourceMappingURL=index.css.map */

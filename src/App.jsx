@@ -110,11 +110,11 @@ function App() {
     <div className="extension-container">
       <div className="header">
         <a onClick={() => (setNotePadToggle(prev => !prev))} className="note-toggle" title="Toggle NotePad">
-        <img
-          src={noteIcon}
-          className="icon"
-          alt="Note Icon"
-        />
+          <img
+            src={noteIcon}
+            className="icon"
+            alt="Note Icon"
+          />
         </a>
       </div>
 
