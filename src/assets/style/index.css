@@ -74,6 +74,10 @@ body {
   letter-spacing: -0.5px;
 }
 
+.App .header a {
+  cursor: pointer;
+}
+
 .App .header .icon {
   width: 20px;
   fill: #343434;
@@ -164,6 +168,10 @@ body {
 .App .buttons-wrapper button.warning {
   color: #e67700;
   border-color: #e67700;
+}
+
+.notepad-area h3 {
+  text-align: left;
 }
 
 .notepad-area .textarea-wrapper {

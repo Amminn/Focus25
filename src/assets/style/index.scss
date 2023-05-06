@@ -64,6 +64,10 @@ body {
       letter-spacing: -0.5px;
     }
 
+    a {
+      cursor: pointer;
+    }
+
     .icon {
       width: 20px;
       fill: #343434;
@@ -153,6 +157,10 @@ body {
 }
 
 .notepad-area {
+
+  h3 {
+    text-align: left;
+  }
 
   .textarea-wrapper {
     position: relative;

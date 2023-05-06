@@ -8,9 +8,9 @@ import Note from './Note'
 import newNotification from './assets/audiomass-output-edited.wav'
 
 function App() {
-  console.log('hello from the other side')
   const [focusTime, setFocusTime] = React.useState({ minutes: '25', seconds: '00' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
+  // this one is suppose to save the
   const [userTime, setUserTime] = React.useState({
     focus: { minutes: '25', seconds: '00' },
     break: { minutes: '05', seconds: '00' },
@@ -20,7 +20,7 @@ function App() {
   const [notePadToggle, setNotePadToggle] = React.useState(false)
   // after 4 session increase the break time a little bit once
 
-  // configuration / focusTime / breakTime / PauseRun / mode
+  // configuration / focus / break / mode
   function rememberUserTime () {
     setUserTime(prev => ({
       focus: {minutes: focusTime.minutes, seconds: focusTime.seconds},
@@ -69,8 +69,14 @@ function App() {
   const audio = new Audio(newNotification)
 
   // request permission to display notifications
-  if (Notification.permission !== 'granted') {
-    Notification.requestPermission();
+  function requestNotificationPermission() {
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  }
+
+  function titleRender(mode) {
+    return document.title = mode === 'configuration' ? 'Focus25 App' : ''
   }
 
   React.useEffect(() => {
@@ -113,7 +119,12 @@ function App() {
     }
 
     return () => clearInterval(intervalId);
+
   }, [isActive, mode]);
+
+  React.useEffect(() => {
+    titleRender(mode)
+  }, [mode])
 
   return (
     <div className="App">
@@ -165,8 +176,8 @@ function App() {
             <button
               className="warning"
               onClick={() => {
-                setFocusTime({ minutes: '25', seconds: '00' }),
-                setBreakTime({ minutes: '05', seconds: '00' }),
+                setFocusTime({ minutes: userTime.focus.minutes, seconds: userTime.focus.seconds }),
+                setBreakTime({ minutes: userTime.break.minutes, seconds: userTime.break.seconds }),
                 setIsActive(false)
                 setMode('configuration')
               }}
@@ -182,7 +193,8 @@ function App() {
             (
               setIsActive(true),
               setMode('focus'),
-              rememberUserTime()
+              rememberUserTime(),
+              requestNotificationPermission()
             )
           }}
           className="button-btn single"
