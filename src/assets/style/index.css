@@ -12,6 +12,19 @@ html {
   color: #343a40;
 }
 
+body {
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -36,6 +49,8 @@ html {
   background-color: white;
   width: 320px;
   padding: 2rem;
+  border: 1px solid gray;
+  border-radius: 10px;
   text-align: center;
 }
 
@@ -44,9 +59,9 @@ html {
   display: -ms-flexbox;
   display: flex;
   height: 2rem;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -54,7 +69,9 @@ html {
 }
 
 .App .header .logo {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .App .header .icon {
@@ -96,8 +113,12 @@ html {
   text-align: center;
 }
 
+.App .main .work h2 {
+  font-size: 2.4rem;
+}
+
 .App .main .work p {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   color: inherit;
 }
 
@@ -131,6 +152,7 @@ html {
 }
 
 .App .buttons-wrapper button {
+  color: #343434;
   padding: 0.8rem 2.8rem;
   background-color: transparent;
   border: 1px solid #343434;

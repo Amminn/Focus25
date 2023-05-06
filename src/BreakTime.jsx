@@ -1,6 +1,7 @@
 import React from 'react'
 
 function BreakTime({breakTime}) {
+  document.title = `${breakTime.minutes}:${breakTime.seconds}Min`
   return (
     <div className="work">
       <h2>Break Time</h2>

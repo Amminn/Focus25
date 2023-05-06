@@ -10,6 +10,7 @@ function TimeConfiguration({focusTime, breakTime, handleFocusTimeChange, handleB
   return (
     <>
       <div className="input-container">
+        <h2>Set the Timer</h2>
         <span>Timer: </span>
         <input
           className="input focus min-input"

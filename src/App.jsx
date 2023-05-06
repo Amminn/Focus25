@@ -68,6 +68,11 @@ function App() {
 
   const audio = new Audio(newNotification)
 
+  // request permission to display notifications
+  if (Notification.permission !== 'granted') {
+    Notification.requestPermission('');
+  }
+
   React.useEffect(() => {
     let intervalId;
     if (isActive && mode === 'focus') {
@@ -80,6 +85,9 @@ function App() {
             setNotePadToggle(true)
             setMode('break');
             setIsActive(false)
+            new Notification('Timer Finished!', {
+              body: 'Your timer has finished!',
+            });
             clearInterval(intervalId);
           }
           return { minutes, seconds };
@@ -110,6 +118,7 @@ function App() {
   return (
     <div className="App">
       <div className="header">
+        <div className="logo">Focus25</div>
         <a onClick={() => (setNotePadToggle(prev => !prev))} className="note-toggle" title="Toggle NotePad">
           <img
             src={noteIcon}
