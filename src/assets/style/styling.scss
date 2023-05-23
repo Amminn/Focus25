@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap');
+
+$Purple-clr: #7012CE;
+$Green-clr: #1FD171;
+$Body-bg-clr: #E5E5E5;
+$App-bg-clr: #070417;
+$Btn-bg-clr: #292639;
+$Btn-bg-clr-hover: #413c61;
+
+@mixin centerFlexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin centerAbsolute {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px !important;
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  background: $Body-bg-clr;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  @include centerFlexbox;
+}
+
+.app {
+  width: 750px;
+  padding-block: 5rem;
+  background: $App-bg-clr;
+  border-radius: 10px;
+  color: white;
+
+  .container {
+    max-width: 520px;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 2rem;
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.7rem;
+      font-weight: 500;
+      margin-bottom: 6.5rem;
+
+      .note {
+        cursor: pointer;
+      }
+    }
+
+    .big-title {
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .total-focus {
+      text-align: center;
+      color: $Purple-clr;
+      font-size: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .circle-container {
+      display: flex;
+      justify-content: space-between;
+
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          width: 30px;
+          height: 30px;
+          background-color: $Btn-bg-clr;
+          border: none;
+          border-radius: 50%;
+          margin-bottom: 1rem;
+          @include centerFlexbox;
+          cursor: pointer;
+
+          &:hover {
+            background: $Btn-bg-clr-hover;
+          }
+
+          & > * {
+            transform: scale(0.8);
+          }
+        }
+      }
+
+      .progress-circle {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        .timer {
+          @include centerAbsolute;
+          font-size: 2.5rem;
+          z-index: 10;
+        }
+
+        .circle {
+          @include centerAbsolute;
+          transform:
+            translate(-50%, -50%)
+            rotate(-90deg);
+        }
+      }
+
+      .progress-type {
+        font-size: 1.8rem;
+        // letter-spacing: 1px;
+        font-weight: 400;
+        text-align: center;
+        padding-top: 1.5rem;
+      }
+    }
+  }
+
+  .bottom-buttons {
+    margin-top: 4rem;
+  }
+
+  .start-buttons {
+    display: none;
+    button {
+      display: block;
+      cursor: pointer;
+      font-size: 1.4rem;
+    }
+    .large-button {
+      padding: 1.3rem 15rem;
+      color: white;
+      background-color: #1B143F;
+      border: none;
+      border-radius: 5px;
+      margin-inline: auto;
+    }
+
+  }
+
+  .clean {
+    display: block;
+    color: #BDBDBD;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin-top: 2.2rem;
+    margin-inline: auto;
+    cursor: pointer;
+  }
+
+  .control-buttons {
+    // display: none;
+    .rounded-buttons {
+      display: flex;
+      width: 100%;
+      max-width: 250px;
+      margin-inline: auto;
+      justify-content: space-between;
+      align-items: center;
+
+      .button {
+        border: none;
+        background: $Btn-bg-clr;
+        width: 60px;
+        height: 60px;
+        @include centerFlexbox;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+          background: $Btn-bg-clr-hover;
+        }
+      }
+
+      h3 {
+        font-weight: 400;
+        text-align: center;
+        margin-top: 1rem;
+      }
+    }
+  }
+
+}
+
+//
+.input-container {
+  @include centerAbsolute;
+  z-index: 12;
+  font-size: 2.5rem;
+  margin-inline: auto;
+  text-align: center;
+
+  .input {
+    width: 2ch;
+    font-size: 2.5rem;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+  .input[type="number"]::-webkit-outer-spin-button,
+  .input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
