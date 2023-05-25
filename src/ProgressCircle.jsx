@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Time from "./Time";
 
-export default function ProgressCircle({ mode, title, time, color, offset, change, timeStarter }) {
+export default function ProgressCircle({ mode, title, time, color, isActive, change, timeStarter }) {
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
   const [finalStrokeDashoffset, setFinalStrokeDashoffset] = useState(0);
 
@@ -27,9 +27,9 @@ export default function ProgressCircle({ mode, title, time, color, offset, chang
   // }, [time]);
 
   useEffect(() => {
-    if (mode === 'configuration') {
+    if (mode === 'configuration' || mode !== title.toLowerCase()) {
       setStrokeDashoffset(0)
-    } else {
+    } else if (isActive) {
       setStrokeDashoffset(calculateStrokeDashoffset())
     }
   }, [time])

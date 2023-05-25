@@ -58,6 +58,13 @@ body {
       font-weight: 500;
       margin-bottom: 6.5rem;
 
+      .logo {
+        a {
+          text-decoration: none;
+          color: white;
+        }
+      }
+
       .note {
         cursor: pointer;
       }

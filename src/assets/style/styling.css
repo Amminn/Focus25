@@ -53,6 +53,11 @@ body {
   margin-bottom: 6.5rem;
 }
 
+.app .container nav .logo a {
+  text-decoration: none;
+  color: white;
+}
+
 .app .container nav .note {
   cursor: pointer;
 }
