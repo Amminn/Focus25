@@ -4,14 +4,15 @@ import React from "react";
 // import BreakTime from "./BreakTime";
 // import noteIcon from "./assets/bx-notepad.svg";
 import Note from './Note'
-// // import notificationSound from './assets/mixkit-happy-bell-alert-601.wav'
-// import newNotification from './assets/audiomass-output-edited.wav'
+import newNotification from './assets/audiomass-output-edited.wav'
 import ProgressCircle from './ProgressCircle'
 import 'boxicons'
-// make the count down work, make the progress bare work
+
 function App() {
   const [focusTime, setFocusTime] = React.useState({ minutes: '00', seconds: '10' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '00', seconds: '10' });
+  // total time focus by each day, not available yet
+  // const [totalFocusTimeToday, setTotalFocusTimeToday] = React.useState(0)
   // this one is suppose to save the
   const [userTime, setUserTime] = React.useState({
     focus: { minutes: '25', seconds: '00' },
@@ -47,6 +48,14 @@ function App() {
       focus: {minutes: focusTime.minutes, seconds: focusTime.seconds},
       break: {minutes: breakTime.minutes, seconds: breakTime.seconds}
     }))
+  }
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 
   function handleFocusTimeChange(e) {
@@ -87,18 +96,18 @@ function App() {
     });
   }
 
-  // const audio = new Audio(newNotification)
+  const audio = new Audio(newNotification)
 
-  // // request permission to display notifications
-  // function requestNotificationPermission() {
-  //   if (Notification.permission !== 'granted') {
-  //     Notification.requestPermission();
-  //   }
-  // }
+  // request permission to display notifications
+  function requestNotificationPermission() {
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  }
 
-  // function titleRender(mode) {
-  //   return document.title = mode === 'configuration' ? 'Focus25 App' : ''
-  // }
+  function titleRender(mode) {
+    return document.title = mode === 'configuration' ? 'Focus25 App' : ''
+  }
 
   const handleIncreaseFocusTime = () => {
     setFocusTime(prevTime => {
@@ -120,18 +129,12 @@ function App() {
       // if the new min is bigger than update the useTime,
       // userTime here is working like the total that will be used to calculate the circle progress
         // i have to check if the count down is about the focusTime
-
-        // isActive && mode == 'focus'
-            // update the userTime of break
-        // isActive && mode == 'break'
-            // update the userTime of focus
       if (mode === 'break') {
         setUserTime(prevUserTime => ({
           ...prevUserTime,
           break: { minutes: formattedMinutes, seconds: formattedSeconds }
         }));
       } else if (newMinutes > focusMinutes || (newMinutes === focusMinutes && newSeconds > focusSeconds)) {
-        console.log('i did increase the userTIme with the current value')
         setUserTime(prevUserTime => ({
           ...prevUserTime,
           focus: { minutes: formattedMinutes, seconds: formattedSeconds }
@@ -225,18 +228,21 @@ function App() {
     let intervalId;
     if (isActive && mode === 'focus') {
       intervalId = setInterval(() => {
+        // increment by one second every time the focus time run
+        // this feature not available yet
+        // setTotalFocusTimeToday(prev => prev + 1)
         setFocusTime(prevTime => {
           const seconds = prevTime.seconds === '00' ? '59' : String(Number(prevTime.seconds) - 1).padStart(2, '0');
           const minutes = seconds === '59' ? String(Number(prevTime.minutes) - 1).padStart(2, '0') : prevTime.minutes;
           if (minutes === '00' && seconds === '00') {
             // see how to make it impossible to count under 00
-            // audio.play()
+            audio.play()
             setNotePadToggle(true)
             setMode('break');
             setIsActive(false)
-            // new Notification('Timer Finished!', {
-            //   body: 'Your timer has finished!',
-            // });
+            new Notification('Focus Timer Finished!', {
+              body: 'Your focus timer has finished!',
+            });
             clearInterval(intervalId);
           }
           return { minutes, seconds };
@@ -249,11 +255,14 @@ function App() {
           const minutes = seconds === '59' ? String(Number(prevTime.minutes) - 1).padStart(2, '0') : prevTime.minutes;
           if (minutes === '00' && seconds === '00') {
             setNotePadToggle(false)
-            // audio.play()
-            setMode('focus');
+            audio.play()
+            setMode('focus')
             setIsActive(false)
             restartHome()
-            clearInterval(intervalId);
+            new Notification('Break Timer Finished!', {
+              body: 'Your break timer has finished!',
+            });
+            clearInterval(intervalId)
           }
           return { minutes, seconds };
         });
@@ -264,9 +273,9 @@ function App() {
 
   }, [isActive, mode]);
 
-  // React.useEffect(() => {
-  //   titleRender(mode)
-  // }, [mode])
+  React.useEffect(() => {
+    titleRender(mode)
+  }, [mode])
 
   React.useEffect(() => {
     if (breakTime.minutes === '00' && breakTime.seconds === '00') {
@@ -274,88 +283,6 @@ function App() {
     }
   }, [breakTime]);
 
-  // return (
-  //   <div className="App">
-  //     <div className="header">
-  //       <div className="logo">Focus25</div>
-  //       <a onClick={() => (setNotePadToggle(prev => !prev))} className="note-toggle" title="Toggle NotePad">
-  //         <img
-  //           src={noteIcon}
-  //           className="icon"
-  //           alt="Note Icon"
-  //         />
-  //       </a>
-  //     </div>
-
-  //     <div className="main">
-  //       {mode === 'configuration' && (
-  //           <TimeConfiguration
-  //             focusTime={focusTime}
-  //             breakTime={breakTime}
-  //             handleBreakTimeChange={handleBreakTimeChange}
-  //             handleFocusTimeChange={handleFocusTimeChange}
-  //           />
-  //         )
-  //       }
-  //       {mode === 'focus' && (
-  //         <FocusTime
-  //           focusTime={focusTime}
-  //         />
-  //       )}
-  //       {mode === 'break' && (
-  //         <BreakTime
-  //           breakTime={breakTime}
-  //         />
-  //       )}
-  //     </div>
-
-  //     {notePadToggle && (
-  //       <Note />
-  //     )}
-
-  //     <div className="buttons-wrapper">
-  //       {(mode === 'focus' || mode === 'break') && (
-  //         <>
-  //           <button
-  //             onClick={() => (setIsActive(prev => !prev))}
-  //           >
-  //             {isActive ? 'Pause' : 'Continue'}
-  //           </button>
-  //           <button
-  //             className="warning"
-  //             onClick={() => {
-  //               setFocusTime({ minutes: userTime.focus.minutes, seconds: userTime.focus.seconds }),
-  //               setBreakTime({ minutes: userTime.break.minutes, seconds: userTime.break.seconds }),
-  //               setIsActive(false)
-  //               setMode('configuration')
-  //             }}
-  //             >
-  //             Reset
-  //           </button>
-  //         </>
-  //       )}
-  //     </div>
-  //     {mode === 'configuration' && (
-  //       <button
-  //         onClick={() => {
-  //           (
-  //             setIsActive(true),
-  //             setMode('focus'),
-  //             rememberUserTime(),
-  //             requestNotificationPermission()
-  //           )
-  //         }}
-  //         className="button-btn single"
-  //       >
-  //         Start
-  //       </button>
-  //     )}
-  //   </div>
-  // )
-
-  const [totalFocus, setTotalFocus] = React.useState({min: '00', sec: '00'})
-  console.log(focusTime)
-  console.log(breakTime)
   return (
     <div className="app">
 
@@ -367,9 +294,9 @@ function App() {
 
         <h2 className="big-title">Focus Time</h2>
         <p className="total-focus">
-          Total Focus
+          {/* Total Focus
           <br />
-          <span>40:00</span>
+          <span>{formatTime(totalFocusTimeToday)}</span> */}
         </p>
 
         <div className="circle-container">
@@ -448,7 +375,7 @@ function App() {
                 setIsActive(true),
                 setMode('focus'),
                 rememberUserTime(),
-                { /* requestNotificationPermission() */}
+                requestNotificationPermission()
               )
             }}
             className="large-button">Start</button>
@@ -484,7 +411,6 @@ function App() {
               <button
                 className="button Reset"
                 onClick={() => {
-                  console.log('i did top')
                   setIsActive(false),
                   setMode('configuration'),
                   // set the timer to it's start value

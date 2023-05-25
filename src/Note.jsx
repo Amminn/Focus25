@@ -1,5 +1,4 @@
 import React from 'react'
-import deleteIcon from './assets/outline-delete-forever.svg'
 import 'boxicons'
 
 function Note() {

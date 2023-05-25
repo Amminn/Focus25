@@ -3,7 +3,6 @@ import Time from "./Time";
 
 export default function ProgressCircle({ mode, title, time, color, isActive, change, timeStarter }) {
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
-  const [finalStrokeDashoffset, setFinalStrokeDashoffset] = useState(0);
 
   const totalTime = parseInt(timeStarter?.minutes) * 60 + parseInt(timeStarter?.seconds);
   const remainingTime = parseInt(time.minutes) * 60 + parseInt(time.seconds);
@@ -13,19 +12,6 @@ export default function ProgressCircle({ mode, title, time, color, isActive, cha
     return Math.floor(628 - progress);
   };
 
-  // useEffect(() => {
-  //   console.log(time)
-  //   console.log('use effect did run');
-  //   if (mode !== 'configuration') {
-  //     console.log(calculateStrokeDashoffset());
-  //     if (remainingTime > 0) {
-  //       setStrokeDashoffset(calculateStrokeDashoffset());
-  //     } else {
-  //       setFinalStrokeDashoffset(calculateStrokeDashoffset());
-  //     }
-  //   }
-  // }, [time]);
-
   useEffect(() => {
     if (mode === 'configuration' || mode !== title.toLowerCase()) {
       setStrokeDashoffset(0)
@@ -33,13 +19,6 @@ export default function ProgressCircle({ mode, title, time, color, isActive, cha
       setStrokeDashoffset(calculateStrokeDashoffset())
     }
   }, [time])
-
-  // const currentStrokeDashoffset = remainingTime > 0 ? strokeDashoffset : finalStrokeDashoffset;
-
-  // time value
-  // progress circle
-  // based on the time calculate the progress circle
-  // color
 
   return (
     <>
