@@ -9,8 +9,8 @@ import ProgressCircle from './ProgressCircle'
 import 'boxicons'
 
 function App() {
-  const [focusTime, setFocusTime] = React.useState({ minutes: '00', seconds: '10' });
-  const [breakTime, setBreakTime] = React.useState({ minutes: '00', seconds: '10' });
+  const [focusTime, setFocusTime] = React.useState({ minutes: '20', seconds: '00' });
+  const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
   // total time focus by each day, not available yet
   // const [totalFocusTimeToday, setTotalFocusTimeToday] = React.useState(0)
   // this one is suppose to save the

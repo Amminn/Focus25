@@ -3,7 +3,7 @@ import Time from "./Time";
 
 export default function ProgressCircle({ mode, title, time, color, isActive, change, timeStarter }) {
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
-
+  console.log(title)
   const totalTime = parseInt(timeStarter?.minutes) * 60 + parseInt(timeStarter?.seconds);
   const remainingTime = parseInt(time.minutes) * 60 + parseInt(time.seconds);
 
@@ -26,7 +26,11 @@ export default function ProgressCircle({ mode, title, time, color, isActive, cha
         {/* remember that this should be input at first */}
         {/* <h2 className="timer">{time}</h2> */}
         <div className="input-container">
-          {mode !== 'configuration' ? <Time Time={time} />
+          {mode !== 'configuration' ? <Time
+           Time={time}
+           mode={mode}
+           title={title}
+           />
           :
           <>
             <input
