@@ -1,12 +1,18 @@
 import React from 'react'
 import 'boxicons'
 
-function Note() {
+function Note({textRef}) {
   const [noteContent, setNoteContent] = React.useState('')
   const [trashActive, setTrashActive] = React.useState(false)
 
+  React.useEffect(() => {
+    if (textRef.current) {
+      textRef.current.focus()
+    }
+  }, [textRef])
+
   function noteChangeHandler(e) {
-    let value = e.target.value
+    let value = e.target.value.trimStart()
     setNoteContent(value)
     localStorage.setItem('noteContent', value);
     if (value === '') {
@@ -25,7 +31,6 @@ function Note() {
   }, [])
 
   function clear() {
-    console.log('i did clear')
     setNoteContent('')
     localStorage.setItem('noteContent', '');
     setTrashActive(false)
@@ -42,14 +47,14 @@ function Note() {
           className='delete'
           onClick={clear}
         >
-          {/* <img src={deleteIcon} alt="" /> */}
-          <box-icon name='trash' color='#ff6933' size='24px' />
+        <box-icon name='trash' color='#ff6933' size='24px' />
         </button>
         <textarea
           placeholder='Boost Your Productivity now...'
           value={noteContent}
           onChange={noteChangeHandler}
           className='textarea'
+          ref={textRef}
         />
       </div>
     </div>

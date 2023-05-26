@@ -28,8 +28,10 @@ function App() {
   const [isActive, setIsActive] = React.useState(false);
   const [notePadToggle, setNotePadToggle] = React.useState(false);
   // after 4 session increase the break time a little bit once
-
   // configuration / focus / break / mode
+
+  const textAreaRef = React.useRef(null)
+
   // restart to factory config
   function restartFactory() {
     setFocusTime({minutes: factory.focus.minutes, seconds: factory.focus.seconds});
@@ -363,7 +365,7 @@ function App() {
 
         </div>
 
-        {notePadToggle && <Note />}
+        {notePadToggle && <Note textRef={textAreaRef} />}
         {/* can apply some fad in animation to make come in smoothly */}
 
         {/* === here i have two style of button to switch between === */}
