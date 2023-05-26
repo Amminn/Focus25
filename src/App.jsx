@@ -1,4 +1,4 @@
-import React from "react";
+import React, { StrictMode } from "react";
 // import FocusTime from "./FocusTime";
 // import TimeConfiguration from "./TimeConfiguration";
 // import BreakTime from "./BreakTime";
@@ -280,7 +280,7 @@ function App() {
   }, [mode])
 
   React.useEffect(() => {
-    if (breakTime.minutes === '00' && breakTime.seconds === '00') {
+    if (isActive && (breakTime.minutes === '00' && breakTime.seconds === '00')) {
       restartHome()
     }
   }, [breakTime]);
@@ -409,6 +409,25 @@ function App() {
               <h3>{isActive ? 'Pause' : 'Play'}</h3>
             </div>
 
+            {isActive && <div className="button-text">
+              <button
+                className="button Reset"
+                onClick={() => {
+                  setIsActive(true)
+                  if (mode === 'focus') {
+                    setMode('break')
+                    setFocusTime({minutes: userTime.focus.minutes, seconds: userTime.focus.seconds});
+                    console.log(userTime)
+                  } else if (mode === 'break') {
+                    restartHome()
+                    setMode('focus')
+                  }
+                }}
+              >
+                <box-icon name='skip-next' color='#ffffff' size='32px' />
+              </button>
+              <h3>Skip</h3>
+            </div>}
             <div className="button-text">
               <button
                 className="button Reset"
