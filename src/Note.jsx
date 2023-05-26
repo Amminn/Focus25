@@ -34,6 +34,7 @@ function Note({textRef}) {
     setNoteContent('')
     localStorage.setItem('noteContent', '');
     setTrashActive(false)
+    textRef.current.focus()
   }
 
   return (
