@@ -76,6 +76,12 @@ body {
   margin-bottom: 3.5rem;
 }
 
+.app .container .total-focus .time {
+  display: block;
+  width: 70px;
+  margin-inline: auto;
+}
+
 .app .container .circle-container {
   display: -webkit-box;
   display: -ms-flexbox;

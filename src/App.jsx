@@ -9,10 +9,15 @@ import ProgressCircle from './ProgressCircle'
 import 'boxicons'
 
 function App() {
+  const currentDate = new Date();
+  const currentDay = currentDate.getDate()
   const [focusTime, setFocusTime] = React.useState({ minutes: '20', seconds: '00' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
   // total time focus by each day, not available yet
-  // const [totalFocusTimeToday, setTotalFocusTimeToday] = React.useState(0)
+  const [totalFocusTimeToday, setTotalFocusTimeToday] = React.useState({
+    day: currentDay,
+    time: 0
+  })
   // this one is suppose to save the
   const [userTime, setUserTime] = React.useState({
     focus: { minutes: '25', seconds: '00' },
@@ -52,7 +57,8 @@ function App() {
     }))
   }
 
-  function formatTime(seconds) {
+  function formatTime(data) {
+    const seconds = data.time
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     const formattedMinutes = String(minutes).padStart(2, '0');
@@ -232,7 +238,13 @@ function App() {
       intervalId = setInterval(() => {
         // increment by one second every time the focus time run
         // this feature not available yet
-        // setTotalFocusTimeToday(prev => prev + 1)
+        setTotalFocusTimeToday(prev => ({
+          ...prev,
+          time: prev.time + 1
+        }));
+        localStorage.setItem('todayFocus', JSON.stringify(totalFocusTimeToday))
+        console.log(localStorage.getItem('todayFocus'))
+        // it doesn't keep updating it each second which is good!
         setFocusTime(prevTime => {
           const seconds = prevTime.seconds === '00' ? '59' : String(Number(prevTime.seconds) - 1).padStart(2, '0');
           const minutes = seconds === '59' ? String(Number(prevTime.minutes) - 1).padStart(2, '0') : prevTime.minutes;
@@ -285,6 +297,26 @@ function App() {
     }
   }, [breakTime]);
 
+   React.useEffect(() => {
+    const savedTotalFocusTimeToday = localStorage.getItem('todayFocus');
+    if (savedTotalFocusTimeToday) {
+      const {day, time} = JSON.parse(savedTotalFocusTimeToday)
+      if (day == currentDay) {
+        setTotalFocusTimeToday(prev => ({...prev, time: time}));
+      } else if (day != currentDate) {
+        setTotalFocusTimeToday(prev => ({day: currentDay, time: time}));
+      }
+    }
+   }, []);
+
+  // find a way to check the date()
+  // get something like this:
+  // const data = {
+  //   data: getDate(), // check date ? if === bring the assign time to state || assign the new Date
+  //   // give the state value of 0
+  //   time: 1200
+  // }
+
   return (
     <div className="app">
 
@@ -296,9 +328,15 @@ function App() {
 
         <h2 className="big-title">Focus Time</h2>
         <p className="total-focus">
-          {/* Total Focus
-          <br />
-          <span>{formatTime(totalFocusTimeToday)}</span> */}
+          {
+          // totalFocusTimeToday >= 1200 &&
+            true &&
+            <>
+              <span>Total Focus</span>
+              <br />
+              <span className="time">{formatTime(totalFocusTimeToday)}</span>
+            </>
+          }
         </p>
 
         <div className="circle-container">
@@ -417,7 +455,6 @@ function App() {
                   if (mode === 'focus') {
                     setMode('break')
                     setFocusTime({minutes: userTime.focus.minutes, seconds: userTime.focus.seconds});
-                    console.log(userTime)
                   } else if (mode === 'break') {
                     restartHome()
                     setMode('focus')

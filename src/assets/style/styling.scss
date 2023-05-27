@@ -82,6 +82,12 @@ body {
       color: $Purple-clr;
       font-size: 2rem;
       margin-bottom: 3.5rem;
+
+      .time {
+        display: block;
+        width: 70px;
+        margin-inline: auto;
+      }
     }
 
     .circle-container {
