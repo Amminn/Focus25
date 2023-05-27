@@ -1,9 +1,14 @@
 import React from 'react'
 import 'boxicons'
+import { useTranslation, Trans } from 'react-i18next';
 
 function Note({textRef}) {
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language
   const [noteContent, setNoteContent] = React.useState('')
   const [trashActive, setTrashActive] = React.useState(false)
+
+  console.log(i18n.language)
 
   React.useEffect(() => {
     if (textRef.current) {
@@ -38,8 +43,9 @@ function Note({textRef}) {
   }
 
   return (
-    <div className='notepad-area'>
-      <h3>Write your last idea to not forget</h3>
+    <div className={`notepad-area ${currentLanguage === 'ar' ? 'ar' : ''}`} >
+      <h3>{t('note.title')}</h3>
+      {/* <h3>Write your last idea to not forget</h3> */}
       <div
         className={`textarea-wrapper ${trashActive ? 'active' : ''}`}
       >
@@ -51,7 +57,7 @@ function Note({textRef}) {
         <box-icon name='trash' color='#ff6933' size='24px' />
         </button>
         <textarea
-          placeholder='Boost Your Productivity now...'
+          placeholder={t('note.placeholder')}
           value={noteContent}
           onChange={noteChangeHandler}
           className='textarea'

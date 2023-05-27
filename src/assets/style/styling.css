@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo&family=Rubik:wght@400;500&display=swap");
 * {
   padding: 0;
   margin: 0;
@@ -32,6 +32,13 @@ body {
   background: #070417;
   border-radius: 10px;
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.app.ar {
+  font-family: 'Cairo', sans-serif;
+  line-height: 1.4;
 }
 
 .app .container {
@@ -39,6 +46,44 @@ body {
   width: 100%;
   margin-inline: auto;
   padding-inline: 2rem;
+}
+
+.app .container .languages {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  right: 5%;
+  top: -6%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid white;
+  border-radius: 0 0 30px 30px;
+  padding: 0.7rem 0.4rem;
+  padding-top: 2rem;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.app .container .languages:hover {
+  top: 10%;
+}
+
+.app .container .languages button {
+  background-color: transparent;
+  color: white;
+  font-size: 2rem;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 
 .app .container nav {
@@ -174,6 +219,23 @@ body {
   font-weight: 400;
   text-align: center;
   padding-top: 1.5rem;
+}
+
+.app .notepad-area.ar {
+  font-family: 'Cairo', sans-serif;
+}
+
+.app .notepad-area.ar h3 {
+  text-align: right;
+}
+
+.app .notepad-area.ar .textarea-wrapper textarea {
+  font-family: 'Cairo', sans-serif;
+  text-align: right;
+}
+
+.app .notepad-area.ar .textarea-wrapper .delete {
+  right: 94%;
 }
 
 .app .notepad-area h3 {
@@ -347,5 +409,9 @@ body {
 
 .input-container .input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.ar button {
+  font-family: 'Cairo', sans-serif;
 }
 /*# sourceMappingURL=styling.css.map */

@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Cairo&family=Rubik:wght@400;500&display=swap');
 $Purple-clr: #7012CE;
 $Green-clr: #1FD171;
 $Body-bg-clr: #E5E5E5;
@@ -36,6 +35,7 @@ body {
   padding-top: 2rem;
   margin-top: 2rem;
   @include centerFlexbox;
+
 }
 
 .app {
@@ -44,12 +44,50 @@ body {
   background: $App-bg-clr;
   border-radius: 10px;
   color: white;
+  position: relative;
+  overflow: hidden;
+  
+  &.ar {
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.4;
+  }
+
 
   .container {
     max-width: 520px;
     width: 100%;
     margin-inline: auto;
     padding-inline: 2rem;
+
+    .languages {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      right: 5%;
+      top: -6%;
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border: 1px solid white;
+      border-radius: 0 0 30px 30px;
+      padding: 0.7rem 0.4rem;
+      padding-top: 2rem;
+      transition: 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        top: 10%;
+      }
+
+      button {
+        background-color: transparent;
+        color: white;
+        font-size: 2rem;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+      }
+    }
 
     nav {
       display: flex;
@@ -156,6 +194,23 @@ body {
   }
 
   .notepad-area {
+
+    &.ar {
+        font-family: 'Cairo', sans-serif;
+      h3 {
+        text-align: right;
+      }
+      .textarea-wrapper {
+        textarea {
+          font-family: 'Cairo', sans-serif;
+          text-align: right;
+        }
+
+        .delete {
+          right: 94%;
+        }
+      }
+    }
 
     h3 {
       text-align: left;
@@ -321,4 +376,8 @@ body {
   .input[type="number"] {
     -moz-appearance: textfield;
   }
+}
+
+.ar button {
+  font-family: 'Cairo', sans-serif;
 }

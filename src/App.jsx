@@ -7,8 +7,16 @@ import Note from './Note'
 import newNotification from './assets/audiomass-output-edited.wav'
 import ProgressCircle from './ProgressCircle'
 import 'boxicons'
+import { useTranslation, Trans } from 'react-i18next';
+
+const lngs = {
+  en: { nativeName: 'En' },
+  ar: { nativeName: 'Ar' },
+  fr: { nativeName: 'Fr' },
+};
 
 function App() {
+  const { t, i18n } = useTranslation();
   const currentDate = new Date();
   const currentDay = currentDate.getDate()
   const startBtn = React.useRef(null)
@@ -334,23 +342,35 @@ function App() {
   //   // give the state value of 0
   //   time: 1200
   // }
-
+  const currentLanguage = i18n.language
   return (
-    <div className="app">
+    <div className={`app ${currentLanguage === 'ar' ? 'ar' : '' }`}>
 
       <div className="container">
+        <div className="languages">
+          {Object.keys(lngs).map((lng) => (
+            <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+              {lngs[lng].nativeName}
+            </button>
+          ))}
+          <box-icon
+            name='chevron-down'
+            color='#fff'
+            size='32px'
+          />
+        </div>
         <nav>
           <h2 className="logo"><a href="/">Focus25</a></h2>
-          <h2 className="note" onClick={() => setNotePadToggle(prev => !prev)}>Note</h2>
+          <h2 className="note" onClick={() => setNotePadToggle(prev => !prev)}>{t('nav.note')}</h2>
         </nav>
 
-        <h2 className="big-title">Focus Time</h2>
+        <h2 className="big-title">{t('title')}</h2>
         <p className="total-focus">
           {
           // totalFocusTimeToday >= 1200 &&
             true &&
             <>
-              <span>Total Focus</span>
+              <span>{t('totalFocus')}</span>
               <br />
               <span className="time">{formatTime(totalFocusTimeToday)}</span>
             </>
@@ -377,7 +397,7 @@ function App() {
               key='focusTime'
               time={focusTime}
               isActive={isActive}
-              title={"Focus"}
+              title={t('progressFocus')}
               color={'#7012CE'}
               change={handleFocusTimeChange}
               offset={514}
@@ -410,7 +430,7 @@ function App() {
               key='break231Time'
               time={breakTime}
               isActive={isActive}
-              title={"Break"}
+              title={t('progressBreak')}
               color={'#1FD171'}
               change={handleBreakTimeChange}
               offset={314}
@@ -437,7 +457,7 @@ function App() {
                 requestNotificationPermission()
               )
             }}
-            className="large-button">Start</button>
+            className="large-button">{t('beginBtn.start')}</button>
           <button
             className="clean"
             title="Factory Reset"
@@ -447,7 +467,7 @@ function App() {
               setIsActive(false)
             }}
           >
-            Reset</button>
+            {t('beginBtn.reset')}</button>
         </div>}
         {mode !== 'configuration' && <div className="control-buttons bottom-buttons">
           <div className="rounded-buttons">
@@ -463,7 +483,7 @@ function App() {
                   <box-icon name='play' color='#ffffff' size='32px' />
                 }
               </button>
-              <h3>{isActive ? 'Pause' : 'Play'}</h3>
+              <h3>{isActive ? t('controlBtn.pause') : t('controlBtn.play') }</h3>
             </div>
 
             {isActive && <div className="button-text">
@@ -482,7 +502,7 @@ function App() {
               >
                 <box-icon name='skip-next' color='#ffffff' size='32px' />
               </button>
-              <h3>Skip</h3>
+              <h3>{t('controlBtn.skip')}</h3>
             </div>}
             <div className="button-text">
               <button
@@ -497,7 +517,7 @@ function App() {
               >
                 <box-icon name='stop' color='#ffffff' size='32px' />
               </button>
-              <h3>Stop</h3>
+              <h3>{t('controlBtn.stop')}</h3>
             </div>
 
           </div>
@@ -508,7 +528,7 @@ function App() {
               restartHome(),
               setIsActive(false)
             }}
-          >Quit</button>
+          >{t('controlBtn.quit')}</button>
         </div>}
 
       </div>
