@@ -11,6 +11,7 @@ import 'boxicons'
 function App() {
   const currentDate = new Date();
   const currentDay = currentDate.getDate()
+  const startBtn = React.useRef(null)
   const [focusTime, setFocusTime] = React.useState({ minutes: '20', seconds: '00' });
   const [breakTime, setBreakTime] = React.useState({ minutes: '05', seconds: '00' });
   // total time focus by each day, not available yet
@@ -243,7 +244,6 @@ function App() {
           time: prev.time + 1
         }));
         localStorage.setItem('todayFocus', JSON.stringify(totalFocusTimeToday))
-        console.log(localStorage.getItem('todayFocus'))
         // it doesn't keep updating it each second which is good!
         setFocusTime(prevTime => {
           const seconds = prevTime.seconds === '00' ? '59' : String(Number(prevTime.seconds) - 1).padStart(2, '0');
@@ -307,7 +307,25 @@ function App() {
         setTotalFocusTimeToday(prev => ({day: currentDay, time: time}));
       }
     }
-   }, []);
+
+    if (startBtn.current) {
+      startBtn.current.focus()
+    }
+
+    // key handle
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 32) { // Key code for Enter key
+        setIsActive(prev => !prev)
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
 
   // find a way to check the date()
   // get something like this:
@@ -410,6 +428,7 @@ function App() {
 
         {mode === 'configuration' && <div className="start-buttons bottom-buttons">
           <button
+            ref={startBtn}
             onClick={() => {
               (
                 setIsActive(true),
