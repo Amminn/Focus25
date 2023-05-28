@@ -396,6 +396,7 @@ function App() {
             <ProgressCircle
               key='focusTime'
               time={focusTime}
+              type={'focus'}
               isActive={isActive}
               title={t('progressFocus')}
               color={'#7012CE'}
@@ -429,6 +430,7 @@ function App() {
             <ProgressCircle
               key='break231Time'
               time={breakTime}
+              type={"break"}
               isActive={isActive}
               title={t('progressBreak')}
               color={'#1FD171'}

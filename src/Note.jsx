@@ -8,8 +8,6 @@ function Note({textRef}) {
   const [noteContent, setNoteContent] = React.useState('')
   const [trashActive, setTrashActive] = React.useState(false)
 
-  console.log(i18n.language)
-
   React.useEffect(() => {
     if (textRef.current) {
       textRef.current.focus()
